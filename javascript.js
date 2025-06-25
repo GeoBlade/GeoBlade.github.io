@@ -80,6 +80,7 @@ const mapContainer = document.getElementById('map-container');
         const li = document.createElement('li');
         li.textContent = name;
         li.setAttribute('draggable', 'true');
+        li.classList.add('initiative-token'); // <-- Add this line
 
         // Create a delete button
         const deleteBtn = document.createElement('button');
@@ -148,13 +149,7 @@ const mapContainer = document.getElementById('map-container');
         pickedUpToken = null;
       }
     });
-
-    // Optional: Add a CSS class for visual feedback
-    // Add this to your CSS file or <style> section:
-    /*
     
-    */
-
     // Make initiative order sortable
     let draggedItem;
     initiativeOrder.addEventListener('dragstart', function (e) {
@@ -211,6 +206,7 @@ function setWorldState(state) {
   (state.initiativeOrder || []).forEach(name => {
     const li = document.createElement('li');
     li.textContent = name;
+    li.classList.add('initiative-token'); // <-- Add this line
     ul.appendChild(li);
   });
 }
