@@ -8,6 +8,7 @@ const mapContainer = document.getElementById('map-container');
     const tokenBorderToggle = document.getElementById('tokenBorderToggle');
     let dragToken = null;
     let pickedUpToken = null;
+    window.tokens = []; // Track all tokens and their data
 
     toggleBtn.addEventListener('click', () => {
       sidebar.classList.toggle('hidden');
@@ -24,6 +25,7 @@ const mapContainer = document.getElementById('map-container');
         const reader = new FileReader();
         reader.onload = (e) => {
           mapContainer.style.backgroundImage = `url(${e.target.result})`;
+          window.currentMapSrc = e.target.result; // <-- Save the map image data
         };
         reader.readAsDataURL(file);
       }
@@ -59,6 +61,19 @@ const mapContainer = document.getElementById('map-container');
           token.style.border = 'none';
         }
 
+        // Store token data in window.tokens
+        const tokenData = {
+          src: token.src,
+          name,
+          size,
+          borderColor,
+          showBorder,
+          left: 10,
+          top: 10
+        };
+        window.tokens.push(tokenData);
+        token.dataset.tokenIndex = window.tokens.length - 1;
+
         makeDraggable(token);
         mapContainer.appendChild(token);
 
@@ -83,6 +98,13 @@ const mapContainer = document.getElementById('map-container');
           e.stopPropagation();
           if (token.parentNode) token.parentNode.removeChild(token);
           if (li.parentNode) li.parentNode.removeChild(li);
+          // Remove from window.tokens
+          const idx = parseInt(token.dataset.tokenIndex, 10);
+          window.tokens.splice(idx, 1);
+          // Update tokenIndex for remaining tokens
+          Array.from(mapContainer.querySelectorAll('.token')).forEach((img, i) => {
+            img.dataset.tokenIndex = i;
+          });
         });
 
         li.appendChild(deleteBtn);
@@ -116,6 +138,12 @@ const mapContainer = document.getElementById('map-container');
         const y = e.clientY - rect.top - pickedUpToken.offsetHeight / 2;
         pickedUpToken.style.left = `${x}px`;
         pickedUpToken.style.top = `${y}px`;
+        // Update position in window.tokens
+        const idx = parseInt(pickedUpToken.dataset.tokenIndex, 10);
+        if (window.tokens[idx]) {
+          window.tokens[idx].left = x;
+          window.tokens[idx].top = y;
+        }
         pickedUpToken.classList.remove('picked-up');
         pickedUpToken = null;
       }
@@ -155,3 +183,90 @@ const mapContainer = document.getElementById('map-container');
         li.setAttribute('draggable', 'true');
       });
     }).observe(initiativeOrder, { childList: true });
+
+    // Helper: Get current world state
+function getWorldState() {
+  return {
+    map: window.currentMapSrc || null, // <-- Save the map image data
+    tokens: window.tokens || [],
+    initiativeOrder: Array.from(document.querySelectorAll('#initiative-order li')).map(li => li.textContent)
+  };
+}
+
+// Helper: Restore world state
+function setWorldState(state) {
+  // Restore map
+  if (state.map) {
+    window.currentMapSrc = state.map;
+    mapContainer.style.backgroundImage = `url('${state.map}')`; // <-- Restore to mapContainer
+  }
+  // Restore tokens
+  window.tokens = state.tokens || [];
+  // Clear and re-add tokens to the map
+  renderTokens();
+
+  // Restore initiative order
+  const ul = document.getElementById('initiative-order');
+  ul.innerHTML = '';
+  (state.initiativeOrder || []).forEach(name => {
+    const li = document.createElement('li');
+    li.textContent = name;
+    ul.appendChild(li);
+  });
+}
+
+// Render tokens from window.tokens
+function renderTokens() {
+  // Remove all current tokens
+  Array.from(mapContainer.querySelectorAll('.token')).forEach(token => token.remove());
+  window.tokens.forEach((data, idx) => {
+    const token = document.createElement('img');
+    token.src = data.src;
+    token.className = 'token';
+    token.style.width = `${data.size}px`;
+    token.style.height = `${data.size}px`;
+    token.style.left = `${data.left}px`;
+    token.style.top = `${data.top}px`;
+    token.title = data.name;
+    token.dataset.borderColor = data.borderColor;
+    token.dataset.hasBorder = data.showBorder ? "true" : "false";
+    token.dataset.tokenIndex = idx;
+    if (data.showBorder) {
+      token.style.border = `3px solid ${data.borderColor}`;
+    } else {
+      token.style.border = 'none';
+    }
+    makeDraggable(token);
+    mapContainer.appendChild(token);
+  });
+}
+
+// Save World
+document.getElementById('saveWorldBtn').onclick = function() {
+  const state = getWorldState();
+  const blob = new Blob([JSON.stringify(state, null, 2)], {type: 'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'geoblade-world.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+};
+
+// Load World
+document.getElementById('loadWorldBtn').onclick = function() {
+  document.getElementById('loadWorldInput').click();
+};
+document.getElementById('loadWorldInput').onchange = function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    try {
+      const state = JSON.parse(evt.target.result);
+      setWorldState(state);
+    } catch (err) {
+      alert('Invalid world file!');
+    }
+  };
+  reader.readAsText(file);
+};

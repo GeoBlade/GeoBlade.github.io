@@ -15,7 +15,8 @@ body {
 }
 
 #map-container {
-  position: absolute;
+  position: relative;
+  overflow: hidden;
   top: 0;
   left: 0;
   width: 100vw;
@@ -47,6 +48,9 @@ body {
 .token {
   position: absolute;
   cursor: pointer;
+  user-select: none;
+  transition: box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
   border-radius: 30px;
   border-width: 2px !important;
   z-index: 2;
