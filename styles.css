@@ -1,0 +1,191 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  font-family: sans-serif;
+  background: #333;
+  color: #fff;
+  position: relative; /* Add this */
+}
+
+#map-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid #333;
+  z-index: 1;
+}
+
+.picked-up {
+  outline: 2px dashed #007bff;
+  z-index: 1000;
+}
+
+#map-grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  background-size: 70px 70px;
+  background-image: linear-gradient(to right, rgba(255,255,255,0.4) 1px, transparent 1px),
+                    linear-gradient(to bottom, rgba(255,255,255,0.4) 1px, transparent 1px);
+  z-index: 1;
+}
+
+.token {
+  position: absolute;
+  cursor: pointer;
+  border-radius: 30px;
+  border-width: 2px !important;
+  z-index: 2;
+}
+
+#sidebar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 250px;
+  height: 100vh;
+  background: #333;
+  padding: 10px;
+  overflow-y: auto;
+  border-left: 2px solid #000;
+  transition: transform 0.3s ease;
+  z-index: 3;
+}
+
+#sidebar.hidden {
+  transform: translateX(100%);
+}
+
+#toggleSidebarBtn {
+  position: absolute;
+  top: 0;
+  right: 250px;
+  z-index: 4;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  background: #333;
+  color: #fff;
+  border: 1px solid #000;
+  cursor: pointer;
+  transition: right 0.3s ease;
+}
+
+#sidebar.hidden + #toggleSidebarBtn {
+  right: 0;
+}
+
+#initiative-order {
+  list-style: none;
+  padding: 0;
+}
+
+#initiative-order li {
+  padding: 5px;
+  margin-bottom: 5px;
+  background: #444;
+  cursor: grab;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+input, button {
+  margin-bottom: 10px;
+  width: 100%;
+  background: #444;
+  color: #fff;
+  border: 1px solid #000;
+}
+
+#initiative-order button {
+  margin-left: 10px;
+  width: 30px;
+  height: 30px;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  vertical-align: middle;
+  transition: background 0.2s;
+  background: none; /* Remove background image/color */
+}
+
+#initiative-order button:hover {
+  background: rgba(221, 0, 0, 0.3); /* More transparent red */
+}
+
+#sidebar label,
+#sidebar input,
+#sidebar button {
+  display: block;
+  text-align: left;
+  margin-left: 0;
+}
+
+#sidebar label[style*="display: flex"] {
+  width: auto;
+  margin-bottom: 10px;
+}
+
+#sidebar label[style*="display: flex"] input[type="checkbox"] {
+  width: auto;
+  margin-bottom: 0;
+}
+
+#sidebar label[style*="display: flex"] span {
+  width: auto;
+}
+
+/* Make the Add Token button green and rounded */
+#sidebar button[onclick="addToken()"] {
+  width: 40%;
+  padding: 3px;
+  text-align: center;
+  background: #195c29;
+  color: #fff;
+  border-radius: 20px;
+  border: none;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+#sidebar button[onclick="addToken()"]:hover {
+  background: #218838;
+}
+
+/* Make all inputs and file uploads rounded */
+#sidebar input,
+#sidebar input[type="file"] {
+  border-radius: 12px;
+}
+
+#sidebar-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 70px;
+  height: 70px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+#tokenSize,
+#tokenName {
+  padding-left: 8px;
+}

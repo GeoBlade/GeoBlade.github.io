@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/x-icon" href="images/Logo with txt.png" />
+  <title>GeoBlade</title>
+</head>
+<body>
+  <div id="map-container">
+    <div id="map-grid"></div>
+  </div>
+  <div id="sidebar">
+    <img src="images/Logo with txt.png" alt="GeoBlade Icon" id="sidebar-icon" />
+    <br> <br> <br> <br>
+    <label>Upload a Map</label>
+    <input type="file" id="mapUpload" />
+
+    <label>Upload a Token</label>
+    <input type="file" id="tokenUpload" />
+
+    <label>Token Size (px)</label>
+    <input type="number" id="tokenSize" value="60" />
+
+    <label>Token Name</label>
+    <input type="text" id="tokenName" placeholder="Enter token name" />
+
+    <label>Token Border Color</label>
+    <input type="color" id="tokenBorderColor" value="#ff0000" />
+
+    <label style="display: flex; align-items: center; gap: 8px;">
+      <input type="checkbox" id="tokenBorderToggle" checked />
+      <span>Show Token Border</span>
+    </label>
+    <br>
+    <button onclick="addToken()">Add Token</button>
+
+    <h3>Initiative Order</h3>
+    <ul id="initiative-order"></ul>
+  </div>
+  <button id="toggleSidebarBtn">➤</button>
+
+  <script src="javascript.js"></script>
+</body>
+</html>
