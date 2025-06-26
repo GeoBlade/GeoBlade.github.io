@@ -11,7 +11,23 @@
     <div id="map-grid"></div>
   </div>
   <div id="sidebar">
-    <a href="changelog.html"><img src="images/Logo with txt.png" alt="GeoBlade Icon" id="sidebar-icon" /></a>
+    <div class="sidebar-header">
+        <a href="changelog.html" style="position: absolute; top: 0; right: 0;">
+          <img src="images/Logo with txt.png" alt="GeoBlade Icon" id="sidebar-icon" />
+        </a>
+        <div class="sidebar-socials">
+          <a href="https://discord.gg/epR4kQ8kSW" target="_blank" title="Discord">
+            <img src="images/Social Icons/Discord Icon.png" alt="Discord" />
+          </a>
+          <a href="https://www.tiktok.com/@krimson_knights" target="_blank" title="TikTok">
+            <img src="images/Social Icons/TikTok Icon.png" alt="TikTok" />
+          </a>
+          <a href="https://www.youtube.com/@KrimsonKnightsYT" target="_blank" title="YouTube">
+            <img src="images/Social Icons/YouTube Icon.png" alt="YouTube" />
+          </a>
+        </div>
+        <br>
+    </div>
     <br> <br> <br> <br>
     <label>Upload a Map</label>
     <input type="file" id="mapUpload" />
@@ -41,9 +57,15 @@
 
     <h3>Initiative Order</h3>
     <ul id="initiative-order"></ul>
+    <button id="changelogBtn" class="sidebar-changelog-btn">📜 View Changelog</button>
   </div>
   <button id="toggleSidebarBtn">➤</button>
 
   <script src="javascript.js"></script>
+  <script>
+    document.getElementById('changelogBtn').onclick = function() {
+      window.location.href = 'changelog.html';
+    };
+  </script>
 </body>
 </html>

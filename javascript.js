@@ -78,14 +78,35 @@ const mapContainer = document.getElementById('map-container');
         mapContainer.appendChild(token);
 
         const li = document.createElement('li');
-        li.textContent = name;
+        li.classList.add('initiative-token');
         li.setAttribute('draggable', 'true');
-        li.classList.add('initiative-token'); // <-- Add this line
 
-        // Create a delete button
+        // Create the token preview image
+        const previewImg = document.createElement('img');
+        previewImg.src = token.src;
+        previewImg.alt = name;
+        previewImg.style.width = '28px';
+        previewImg.style.height = '28px';
+        previewImg.style.borderRadius = '50%';
+        previewImg.style.marginRight = '10px';
+        previewImg.style.objectFit = 'cover';
+        // Add border color and width if showBorder is true
+        if (showBorder) {
+          previewImg.style.border = `1px solid ${borderColor}`;
+        } else {
+          previewImg.style.border = 'none';
+        }
+
+        // Create a span for the token name
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = name;
+
+        // Create the delete button (as before)
         const deleteBtn = document.createElement('button');
         deleteBtn.textContent = '🗑️';
-        deleteBtn.style.marginLeft = '10px';
+        deleteBtn.style.display = 'flex';
+        deleteBtn.style.alignItems = 'center';
+        deleteBtn.style.justifyContent = 'center';
         deleteBtn.style.width = '30px';
         deleteBtn.style.height = '30px';
         deleteBtn.style.background = '#a00';
@@ -108,7 +129,11 @@ const mapContainer = document.getElementById('map-container');
           });
         });
 
+        // Assemble the li
+        li.appendChild(previewImg);
+        li.appendChild(nameSpan);
         li.appendChild(deleteBtn);
+
         initiativeOrder.appendChild(li);
       };
       reader.readAsDataURL(file);
@@ -182,9 +207,19 @@ const mapContainer = document.getElementById('map-container');
     // Helper: Get current world state
 function getWorldState() {
   return {
-    map: window.currentMapSrc || null, // <-- Save the map image data
+    map: window.currentMapSrc || null,
     tokens: window.tokens || [],
-    initiativeOrder: Array.from(document.querySelectorAll('#initiative-order li')).map(li => li.textContent)
+    initiativeOrder: Array.from(document.querySelectorAll('#initiative-order li')).map(li => {
+      // Save all info needed for initiative order, including preview and border
+      const img = li.querySelector('img');
+      const span = li.querySelector('span');
+      return {
+        name: span ? span.textContent : li.textContent,
+        src: img ? img.src : null,
+        borderColor: img ? img.style.borderColor || img.style.border : null,
+        showBorder: img ? img.style.border && img.style.border !== 'none' : false
+      };
+    })
   };
 }
 
@@ -193,20 +228,67 @@ function setWorldState(state) {
   // Restore map
   if (state.map) {
     window.currentMapSrc = state.map;
-    mapContainer.style.backgroundImage = `url('${state.map}')`; // <-- Restore to mapContainer
+    mapContainer.style.backgroundImage = `url('${state.map}')`;
   }
   // Restore tokens
   window.tokens = state.tokens || [];
-  // Clear and re-add tokens to the map
   renderTokens();
 
-  // Restore initiative order
+  // Restore initiative order with preview and border
   const ul = document.getElementById('initiative-order');
   ul.innerHTML = '';
-  (state.initiativeOrder || []).forEach(name => {
+  (state.initiativeOrder || []).forEach((entry, idx) => {
     const li = document.createElement('li');
-    li.textContent = name;
-    li.classList.add('initiative-token'); // <-- Add this line
+    li.classList.add('initiative-token');
+    li.setAttribute('draggable', 'true');
+
+    // Token preview image
+    if (entry.src) {
+      const previewImg = document.createElement('img');
+      previewImg.src = entry.src;
+      previewImg.alt = entry.name;
+      previewImg.style.width = '28px';
+      previewImg.style.height = '28px';
+      previewImg.style.borderRadius = '50%';
+      previewImg.style.marginRight = '10px';
+      previewImg.style.objectFit = 'cover';
+      if (entry.showBorder && entry.borderColor) {
+        previewImg.style.border = `1px solid ${entry.borderColor}`;
+      } else {
+        previewImg.style.border = 'none';
+      }
+      li.appendChild(previewImg);
+    }
+
+    // Token name
+    const nameSpan = document.createElement('span');
+    nameSpan.textContent = entry.name;
+    li.appendChild(nameSpan);
+
+    // Create the delete button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = '🗑️';
+    deleteBtn.style.display = 'flex';
+    deleteBtn.style.alignItems = 'center';
+    deleteBtn.style.justifyContent = 'center';
+    deleteBtn.style.width = '30px';
+    deleteBtn.style.height = '30px';
+    deleteBtn.style.background = '#a00';
+    deleteBtn.style.color = '#fff';
+    deleteBtn.style.border = 'none';
+    deleteBtn.style.cursor = 'pointer';
+    deleteBtn.title = 'Delete Token';
+
+    // When clicked, remove the initiative entry (and optionally the token)
+    deleteBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (li.parentNode) li.parentNode.removeChild(li);
+      // Optionally, remove the token from window.tokens and re-render tokens if you want
+      // If you want to sync token removal, you can match by name or add an id to each token
+    });
+
+    li.appendChild(deleteBtn);
+
     ul.appendChild(li);
   });
 }
