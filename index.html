@@ -32,6 +32,8 @@
     <label>Upload a Map</label>
     <input type="file" id="mapUpload" />
 
+    <br>
+
     <label>Upload a Token</label>
     <input type="file" id="tokenUpload" />
 
@@ -41,13 +43,19 @@
     <label>Token Name</label>
     <input type="text" id="tokenName" placeholder="Enter token name" />
 
-    <label>Token Border Color</label>
-    <input type="color" id="tokenBorderColor" value="#ff0000" />
-
     <label style="display: flex; align-items: center; gap: 8px;">
       <input type="checkbox" id="tokenBorderToggle" checked />
       <span>Show Token Border</span>
     </label>
+
+    <label>Token Border Color</label>
+    <input type="color" id="tokenBorderColor" value="#ff0000" />
+
+    <br>
+
+    <label>Grid Color</label>
+    <input type="color" id="gridColorPicker" value="#000000" /> 
+
     <br>
     <button onclick="addToken()">Add Token</button>
 

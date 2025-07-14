@@ -204,11 +204,27 @@ const mapContainer = document.getElementById('map-container');
       });
     }).observe(initiativeOrder, { childList: true });
 
-    // Helper: Get current world state
+    const mapGrid = document.getElementById('map-grid');
+const gridColorPicker = document.getElementById('gridColorPicker');
+
+// Set initial grid color
+mapGrid.style.setProperty('--grid-color', gridColorPicker.value);
+
+// Listen for changes
+gridColorPicker.addEventListener('input', function() {
+  mapGrid.style.setProperty('--grid-color', gridColorPicker.value);
+  window.currentGridColor = gridColorPicker.value;
+});
+
+// Store grid color globally
+window.currentGridColor = gridColorPicker.value;
+
+// Helper: Get current world state
 function getWorldState() {
   return {
     map: window.currentMapSrc || null,
     tokens: window.tokens || [],
+    gridColor: window.currentGridColor || '#000000',
     initiativeOrder: Array.from(document.querySelectorAll('#initiative-order li')).map(li => {
       // Save all info needed for initiative order, including preview and border
       const img = li.querySelector('img');
@@ -291,6 +307,13 @@ function setWorldState(state) {
 
     ul.appendChild(li);
   });
+
+  // Restore grid color
+  if (state.gridColor) {
+    window.currentGridColor = state.gridColor;
+    gridColorPicker.value = state.gridColor;
+    mapGrid.style.setProperty('--grid-color', state.gridColor);
+  }
 }
 
 // Render tokens from window.tokens

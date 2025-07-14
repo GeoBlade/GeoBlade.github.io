@@ -39,8 +39,11 @@ body {
   bottom: 0;
   pointer-events: none;
   background-size: 70px 70px;
-  background-image: linear-gradient(to right, rgb(245, 245, 245, 0.2) 1px, transparent 1px),
-                    linear-gradient(to bottom, rgb(245, 245, 245, 0.2) 1px, transparent 1px);
+  --grid-color: #000;
+  /* Example grid using background-image */
+  background-image: 
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
   z-index: 1;
 }
 
