@@ -16,23 +16,13 @@
           <img src="images/Logo with txt.png" alt="GeoBlade Icon" id="sidebar-icon" />
         </a>
         <div class="sidebar-socials">
-          <a href="https://discord.gg/epR4kQ8kSW" target="_blank" title="Discord">
-            <img src="images/Social Icons/Discord Icon.png" alt="Discord" />
-          </a>
-          <a href="https://www.tiktok.com/@krimson_knights" target="_blank" title="TikTok">
-            <img src="images/Social Icons/TikTok Icon.png" alt="TikTok" />
-          </a>
-          <a href="https://www.youtube.com/@KrimsonKnightsYT" target="_blank" title="YouTube">
-            <img src="images/Social Icons/YouTube Icon.png" alt="YouTube" />
-          </a>
+          <button id="socialBtn" class="sidebar-social-btn">🔗</button>
         </div>
         <br>
     </div>
     <br> <br> <br> <br>
     <label>Upload a Map</label>
     <input type="file" id="mapUpload" />
-
-    <br>
 
     <label>Upload a Token</label>
     <input type="file" id="tokenUpload" />
@@ -153,6 +143,55 @@
     </div>
   </div>
 
+  <div id="socialModal" class="modal" style="display:none;">
+    <div class="modal-content social-modal-content">
+      <span id="closeSocial" class="close">&times;</span>
+      <div class="social-modal-layout">
+        <div class="social-content">
+          <h2>🔗 Connect with GeoBlade</h2>
+          <div class="social-grid">
+            <div class="social-item">
+              <img src="images/Social Icons/Discord Icon.png" alt="Discord" class="social-icon">
+              <div class="social-details">
+                <h3>Discord</h3>
+                <p>Join our community for discussions, support, and game sessions!</p>
+                <button class="social-btn discord-btn" onclick="window.open('https://discord.gg/geoblade', '_blank')">
+                  Join Discord Server
+                </button>
+              </div>
+            </div>
+            
+            <div class="social-item">
+              <img src="images/Social Icons/YouTube Icon.png" alt="YouTube" class="social-icon">
+              <div class="social-details">
+                <h3>YouTube</h3>
+                <p>Watch tutorials, gameplay videos, and feature showcases.</p>
+                <button class="social-btn youtube-btn" onclick="window.open('https://youtube.com/@krimsonknights', '_blank')">
+                  Visit YouTube Channel
+                </button>
+              </div>
+            </div>
+            
+            <div class="social-item">
+              <img src="images/Social Icons/TikTok Icon.png" alt="TikTok" class="social-icon">
+              <div class="social-details">
+                <h3>TikTok</h3>
+                <p>Quick tips, behind-the-scenes content, and fun RPG moments!</p>
+                <button class="social-btn tiktok-btn" onclick="window.open('https://tiktok.com/@krimsonknights', '_blank')">
+                  Follow on TikTok
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="social-footer">
+            <p>💡 <strong>Stay Updated:</strong> Follow us on social media for the latest updates, tutorials, and community events!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="javascript.js"></script>
   <script>
     // Update changelog button to open modal instead of navigating
@@ -174,15 +213,28 @@
       document.getElementById('downloadModal').style.display = 'none';
     };
     
+    // Social modal handlers
+    document.getElementById('socialBtn').onclick = function() {
+      document.getElementById('socialModal').style.display = 'flex';
+    };
+    
+    document.getElementById('closeSocial').onclick = function() {
+      document.getElementById('socialModal').style.display = 'none';
+    };
+    
     // Close modal when clicking outside
     window.onclick = function(event) {
       const changelogModal = document.getElementById('changelogModal');
       const downloadModal = document.getElementById('downloadModal');
+      const socialModal = document.getElementById('socialModal');
       if (event.target === changelogModal) {
         changelogModal.style.display = 'none';
       }
       if (event.target === downloadModal) {
         downloadModal.style.display = 'none';
+      }
+      if (event.target === socialModal) {
+        socialModal.style.display = 'none';
       }
     };
   </script>
