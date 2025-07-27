@@ -49,7 +49,7 @@
     </label>
 
     <label>Token Border Color</label>
-    <input type="color" id="tokenBorderColor" value="#ff0000" />
+    <input class="tokenBorderColor" type="color" id="tokenBorderColor" value="#ff0000" />
 
     <br>
 
@@ -75,6 +75,12 @@
       <span id="closeChangelog" class="close">&times;</span>
       <h2>📜 Changelog</h2>
       <div id="changelogContent">
+        <h3>Version 0.0.5 <span class="version-date">- July 27, 2025</span></h3>
+        <ul>
+            <li>Added an area where you can download our app.</li>
+            <li>Changed UI/UX for the colour selectors.</li>
+            <li>Added site logo & main site link to the download area.</li>
+        </ul>
         
         <h3>Version 0.0.4 <span class="version-date">- June 26, 2025</span></h3>
         <ul>
@@ -138,7 +144,10 @@
           </div>
         </div>
         <div class="download-logo-right">
-          <img src="images/Logo with txt.png" alt="GeoBlade Logo" class="download-modal-logo" />
+            <img src="images/Logo with txt.png" alt="GeoBlade Logo" class="download-modal-logo" />
+            <button class="download-btn" onclick="window.open('https://wibi-studio.com', '_blank')" style="background: #000000;">
+                <img src="images/Logo with Backdrop.png" alt="Wi.Bi Logo" style="width: 30px; height: 30px; vertical-align: middle; border-radius: 5px;">
+                Wi.Bi Studios </button>
         </div>
       </div>
     </div>

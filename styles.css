@@ -126,6 +126,40 @@ input, button {
   box-shadow: 0 4px 24px #0006;
 }
 
+.tokenBorderColor{
+    border-radius: 30px;
+}
+
+/* Style color input boxes to be rounded */
+input[type="color"] {
+    border-radius: 20px !important;
+    width: 60% !important;
+    height: 20px !important;
+    border: 2px solid #222b3a !important;
+    background: #222b3a !important;
+    cursor: pointer;
+    padding: 2px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
+}
+
+input[type="color"]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+}
+
+/* Remove the default color input styling */
+input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+    border-radius: 18px;
+    border: none;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border-radius: 16px;
+    border: none;
+}
+
 #initiative-order button {
   width: 30px;
   height: 30px;
@@ -345,9 +379,8 @@ input, button {
   color: #fff; 
   padding: 30px; 
   border-radius: 12px;
-  min-width: 600px; /* Make it wider */
-  max-width: 90vw; 
-  max-height: 80vh; 
+  max-width: 1000px; 
+  max-height: 700px; 
   overflow-y: auto;
   box-shadow: 0 4px 32px rgba(0,0,0,0.7);
   position: relative;
@@ -395,33 +428,68 @@ input, button {
 
 .download-modal-layout {
   display: flex;
-  gap: 20px;
+  gap: 30px;
   align-items: flex-start;
+  min-height: 400px;
 }
 
 .download-content-left {
-  flex: 1;
+  flex: 2;
   min-width: 0; /* Allows flex item to shrink */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.download-buttons-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 20px;
 }
 
 .download-logo-right {
-  flex: 0 0 200px; /* Fixed width for logo area */
+  flex: 1;
+  max-width: 250px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .download-modal-logo {
-  width: 180px;
+  width: 100%;
+  max-width: 200px;
   height: auto;
   object-fit: contain;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  margin-bottom: 15px;
+}
+
+.logo-text {
+  text-align: center;
+  color: #ccc;
+  font-size: 0.9em;
+  margin-top: 10px;
 }
 
 /* Adjust download buttons for better layout */
 #downloadModal .download-btn {
-  width: 30%;
-  margin-bottom: 10px;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 15px 20px;
+  font-size: 1.1em;
+  font-weight: 500;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+#downloadModal .download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
