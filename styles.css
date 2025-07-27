@@ -273,3 +273,155 @@ input, button {
 .sidebar-changelog-btn:hover {
   background: #323c61;
 }
+    /* #region Download Buttons */
+    .sidebar-download-btn {
+        width: 100%;
+        margin-top: 10px;
+        background: #23283a;
+        color: #fff;
+        border: none;
+        padding: 12px 0;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.2s;
+        text-align: center;
+    }
+
+    .sidebar-download-btn:hover {
+        background: #2D3748;
+    }
+
+    .download-btn{
+        width: 30%;
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        color: white;
+        cursor: pointer;
+    }
+    /* #endregion Download Buttons */
+
+/* Modal styles */
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.5); 
+  justify-content: center; 
+  align-items: center;
+}
+
+.modal-content {
+  background: #222; 
+  color: #fff; 
+  padding: 30px 20px; 
+  border-radius: 12px;
+  min-width: 320px; 
+  max-height: 80vh; 
+  overflow-y: auto;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.7);
+  position: relative;
+}
+
+.close {
+  position: absolute; 
+  top: 10px; 
+  right: 18px; 
+  font-size: 2rem; 
+  cursor: pointer;
+  color: #fff;
+  transition: color 0.3s;
+}
+
+.close:hover {
+  color: #ff6b6b;
+}
+
+/* Changelog Modal Specific Styling */
+#changelogModal .modal-content {
+  background: #23283a;; /* Match sidebar color */
+  color: #fff; 
+  padding: 30px; 
+  border-radius: 12px;
+  min-width: 600px; /* Make it wider */
+  max-width: 90vw; 
+  max-height: 80vh; 
+  overflow-y: auto;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.7);
+  position: relative;
+}
+
+#changelogContent h3 {
+  color: #4CAF50;
+  margin-top: 25px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #444;
+  padding-bottom: 5px;
+}
+
+#changelogContent .version-date {
+  color: #888;
+  font-size: 0.9em;
+  font-weight: normal;
+  margin-left: 10px;
+}
+
+#changelogContent ul {
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+#changelogContent li {
+  margin-bottom: 8px;
+  color: #ddd;
+  line-height: 1.4;
+}
+
+/* Download Modal Specific Styling */
+#downloadModal .modal-content {
+  background: #23283a; /* Match sidebar color */
+  color: #fff; 
+  padding: 30px; 
+  border-radius: 12px;
+  min-width: 800px; /* Make it wider to accommodate logo */
+  max-width: 90vw; 
+  max-height: 80vh; 
+  overflow-y: auto;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.7);
+  position: relative;
+}
+
+.download-modal-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.download-content-left {
+  flex: 1;
+  min-width: 0; /* Allows flex item to shrink */
+}
+
+.download-logo-right {
+  flex: 0 0 200px; /* Fixed width for logo area */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.download-modal-logo {
+  width: 180px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+}
+
+/* Adjust download buttons for better layout */
+#downloadModal .download-btn {
+  width: 30%;
+  margin-bottom: 10px;
+}

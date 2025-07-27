@@ -66,13 +66,127 @@
     <h3>Initiative Order</h3>
     <ul id="initiative-order"></ul>
     <button id="changelogBtn" class="sidebar-changelog-btn">📜 View Changelog</button>
+    <button id="downloadBtn" class="sidebar-download-btn">📱 Download App</button>
   </div>
   <button id="toggleSidebarBtn">➤</button>
 
+  <div id="changelogModal" class="modal" style="display:none;">
+    <div class="modal-content">
+      <span id="closeChangelog" class="close">&times;</span>
+      <h2>📜 Changelog</h2>
+      <div id="changelogContent">
+        <h3>🆕 Latest Features <span class="version-date">- Current</span></h3>
+        <ul>
+          <li>Gallery-based world save system</li>
+          <li>Improved modal popups with better styling</li>
+          <li>Enhanced changelog with version dates</li>
+        </ul>
+        
+        <h3>Version 1.2.0 <span class="version-date">- January 27, 2025</span></h3>
+        <ul>
+          <li>Added gallery save system for worlds</li>
+          <li>Converted changelog to centered modal popup</li>
+          <li>Enhanced UI/UX with better modal styling</li>
+          <li>Improved grid color customization</li>
+        </ul>
+        
+        <h3>Version 1.1.0 <span class="version-date">- January 20, 2025</span></h3>
+        <ul>
+          <li>Added token border customization</li>
+          <li>Improved token management system</li>
+          <li>Enhanced initiative order with drag & drop</li>
+          <li>Added token preview images in initiative</li>
+        </ul>
+        
+        <h3>Version 1.0.0 <span class="version-date">- January 15, 2025</span></h3>
+        <ul>
+          <li>Initial release of GeoBlade</li>
+          <li>Map upload functionality</li>
+          <li>Token system with draggable placement</li>
+          <li>Initiative order tracking</li>
+          <li>Grid color customization</li>
+          <li>Save/Load world states (.json files)</li>
+          <li>Responsive sidebar design</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div id="downloadModal" class="modal" style="display:none;">
+    <div class="modal-content download-modal-content">
+      <span id="closeDownload" class="close">&times;</span>
+      <div class="download-modal-layout">
+        <div class="download-content-left">
+          <h2>📱 Download GeoBlade</h2>
+          <div id="downloadContent">
+            <h3>Desktop Versions</h3>
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px;">
+              <button class="download-btn" onclick="window.open('#', '_blank')" style="background: #0078D4;">
+                🖥️ Download for Windows
+              </button>
+              <button class="download-btn" onclick="window.open('#', '_blank')" style="background: #333;">
+                🍎 Download for macOS
+              </button>
+              <button class="download-btn"onclick="window.open('#', '_blank')" style="background: #FD7E14;">
+                🐧 Download for Linux
+              </button>
+            </div>
+            
+            <h3>Mobile Versions</h3>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <button class="download-btn" onclick="window.open('#', '_blank')" style="background: #34C759;">
+                📱 Download for iOS
+              </button>
+              <button class="download-btn" onclick="window.open('#', '_blank')" style="background: #3DDC84;">
+                🤖 Download for Android
+              </button>
+            </div>
+            
+            <div style="margin-top: 20px; padding: 15px; background: #2A3A5A; border-radius: 8px;">
+              <p style="margin: 0; font-size: 0.9em; color: #BBB;">
+                💡 <strong>Tip:</strong> The web version works great on all devices! Desktop apps offer additional features like offline mode, <br> better performance and 3D environments.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="download-logo-right">
+          <img src="images/Logo with txt.png" alt="GeoBlade Logo" class="download-modal-logo" />
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="javascript.js"></script>
   <script>
+    // Update changelog button to open modal instead of navigating
     document.getElementById('changelogBtn').onclick = function() {
-      window.location.href = 'changelog.html';
+      document.getElementById('changelogModal').style.display = 'flex';
+    };
+    
+    // Close changelog modal
+    document.getElementById('closeChangelog').onclick = function() {
+      document.getElementById('changelogModal').style.display = 'none';
+    };
+    
+    // Download modal handlers
+    document.getElementById('downloadBtn').onclick = function() {
+      document.getElementById('downloadModal').style.display = 'flex';
+    };
+    
+    document.getElementById('closeDownload').onclick = function() {
+      document.getElementById('downloadModal').style.display = 'none';
+    };
+    
+    // Close modal when clicking outside
+    window.onclick = function(event) {
+      const changelogModal = document.getElementById('changelogModal');
+      const downloadModal = document.getElementById('downloadModal');
+      if (event.target === changelogModal) {
+        changelogModal.style.display = 'none';
+      }
+      if (event.target === downloadModal) {
+        downloadModal.style.display = 'none';
+      }
     };
   </script>
 </body>
